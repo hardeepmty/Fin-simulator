@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, default: "" },
   password: { type: String, required: true, default: "" },
   number: { type: String, default: "", default: "" },
+  vcBalance: { type: Number, default: 100 },
+  role: { type: String, default: 'Beginner' },
+  stocks: [{ symbol: String, shares: Number, purchasePrice: Number }],
 })
 
 module.exports = mongoose.model("User", userSchema);
