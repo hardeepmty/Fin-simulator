@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 const {MONGOURI} = require('../keys/keys');
 
 const connect = () => {
-    mongoose.connect(MONGOURI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    });
+    mongoose.connect(MONGOURI);
     
     mongoose.connection.on("connected", async () => {
         console.log("connected to mongo ");
