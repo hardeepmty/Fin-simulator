@@ -3,13 +3,23 @@ const axios = require('axios');
 const API_KEY = "cvb9q21r01qgjh40r2d0cvb9q21r01qgjh40r2dg"; 
 const FINNHUB_BASE_URL = "https://finnhub.io/api/v1";
 
+
 exports.getStockQuote = async (req, res) => {
     try {
         const { symbol } = req.query;
-        if (!symbol) return res.status(400).json({ error: "Stock symbol is required" });
+        if (!symbol) {
+            return res.status(400).json({ error: "Stock symbol is required" });
+        }
 
         const url = `${FINNHUB_BASE_URL}/quote?symbol=${symbol}&token=${API_KEY}`;
         const response = await axios.get(url);
+
+        // Check if critical data is missing
+        if (response.data.d === null || response.data.dp === null) {
+            return res.status(404).json({ error: "Stock data not found" });
+        }
+
+        // Send valid stock data response
         res.json(response.data);
     } catch (error) {
         console.error("Error fetching stock quote:", error);
@@ -17,14 +27,13 @@ exports.getStockQuote = async (req, res) => {
     }
 };
 
+
 exports.getTopCompanies = async (req, res) => {
     try {
         const topCompanies = [
             { symbol: "AAPL", name: "Apple Inc." },
-            { symbol: "MSFT", name: "Microsoft Corporation" },
             { symbol: "GOOGL", name: "Alphabet Inc. (Google)" },
             { symbol: "AMZN", name: "Amazon.com Inc." },
-            { symbol: "TSLA", name: "Tesla Inc." },
             { symbol: "META", name: "Meta Platforms (Facebook)" },
             { symbol: "NVDA", name: "NVIDIA Corporation" },
             { symbol: "BRK.B", name: "Berkshire Hathaway Inc." },

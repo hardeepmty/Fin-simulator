@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema({
   vcBalance: { type: Number, default: 100 },
   role: { type: String, default: 'Beginner' },
   stocks: [{ symbol: String, shares: Number, purchasePrice: Number }],
+  loans: [{
+    amount: Number,
+    interest: Number,
+    dueDate: Date,
+    repaid: Boolean,
+    gracePeriodEnds: Date,  
+  }]
 })
 
 module.exports = mongoose.model("User", userSchema);
