@@ -10,13 +10,18 @@ const userSchema = new mongoose.Schema({
   vcBalance: { type: Number, default: 100 },
   role: { type: String, default: 'Beginner' },
   stocks: [{ symbol: String, shares: Number, purchasePrice: Number }],
-  loans: [{
-    amount: Number,
-    interest: Number,
-    dueDate: Date,
-    repaid: Boolean,
-    gracePeriodEnds: Date,  
-  }]
+  socialStatus: { type: Number, default: 0 }, 
+  ownedCollectibles: [
+    {
+      collectibleId: { type: mongoose.Schema.Types.ObjectId, ref: "Collectible" },
+      name: String,
+      category: String,
+      price: Number,
+      dailyReturn: Number,
+      statusPoints: Number,
+      purchaseDate: { type: Date, default: Date.now },
+    },
+  ],
 })
 
 module.exports = mongoose.model("User", userSchema);

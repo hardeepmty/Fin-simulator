@@ -8,6 +8,7 @@ const mongoose = require("mongoose");
 
 const routes = require("./routes/route");
 
+require("./services/cronJobs");
 const port = 8000;
 
 app.use(express.json());
